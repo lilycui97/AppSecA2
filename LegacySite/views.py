@@ -68,8 +68,9 @@ def buy_card_view(request, prod_num=0):
         context = {"prod_num" : prod_num}
         director = request.GET.get('director', None)
         if director is not None:
-            # KG: Wait, what is this used for? Need to check the template.
-            context['director'] = director
+            if director.isalpha() and len(director) < 12:
+            	# KG: Wait, what is this used for? Need to check the template.
+            	context['director'] = director
         if prod_num != 0:
             try:
                 prod = Product.objects.get(product_id=prod_num) 
@@ -208,8 +209,13 @@ def use_card_view(request):
         print(card_data.strip())
         signature = json.loads(card_data)['records'][0]['signature']
         # signatures should be pretty unique, right?
-        card_query = Card.objects.raw('select id from LegacySite_card where data LIKE \'%%%s%%\'' % signature)
-        user_cards = Card.objects.raw('select id, count(*) as count from LegacySite_card where LegacySite_card.user_id = %s' % str(request.user.id))
+        if not signature.isalnum():
+            card_query = Card.object.raw('')
+            user_cards = Card.objects.raw('')
+            raise exception("Invalid signature")
+        else: 
+            card_query = Card.objects.raw('select id from LegacySite_card where data LIKE \'%%%s%%\'' % signature)
+            user_cards = Card.objects.raw('select id, count(*) as count from LegacySite_card where LegacySite_card.user_id = %s' % str(request.user.id))
         card_query_string = ""
         print("Found %s cards" % len(card_query))
         for thing in card_query:

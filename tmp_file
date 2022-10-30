@@ -1,0 +1,12 @@
+{
+  "merchant_id": "GiftCardz.com                   ",
+  "customer_id": "DuaneGreenes Store 1451         ",
+  "total_value": 2000,
+  "records": [
+    {
+      "record_type": "amount_change",
+      "amount_added": 2000,
+      "signature": "[ insert crypto signature here ]"
+    }
+  ]
+}
