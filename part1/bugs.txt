@@ -1,0 +1,9 @@
+Bugs Found:
+Many unsanitized inputs in which attackers could abuse such as the director variable that is settable via a GET Http request even though the variable is useless and has no sanitization.
+Too much trust in the user when dealing with inputting cards via file upload. (Easily manipulated gift card information in the .gftcrd files)
+Hardcoded SQL statements without any sanitization as well.
+No backup or logs for gift card usage
+No validation when users first register with the service, leading to a direct error page if a user already exists and no password restrictions, allowing users to use very weak passwords to log in with. There are also no restrictions on how many times a user can try to log in to an account, making it vulnerable to brute force attacks.
+Unencrypted card information in the database
+No unique salts for each account leading to multiple similar hashes in the database for similar passwords
+Unintuitive UI (it really sucks)
